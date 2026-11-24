@@ -1,0 +1,32 @@
+// Design tokens from Figma "Poll App Design"
+
+// Colors
+$plum: #35273a; // dark background, main text
+$ink: #221227; // text on light buttons
+$orange: #ffb770;
+$orange-dark: #ee9236; // big headlines
+$peach: #ffcfa1;
+$cream: #fee9d4;
+$paper: #fefdff; // light page background, input fields
+$white: #ffffff;
+$lavender: #faf5fe;
+$lavender-hover: #f4e9fb;
+$percent: #d79451;
+$bar-track: #ededed;
+
+$orange-30: rgba(255, 183, 112, 0.3);
+$orange-60: rgba(255, 183, 112, 0.6);
+$grey-8: rgba(217, 217, 217, 0.08);
+$grey-12: rgba(217, 217, 217, 0.12);
+$grey-16: rgba(217, 217, 217, 0.16);
+$mauve-10: rgba(142, 112, 153, 0.1);
+$mauve-16: rgba(142, 112, 153, 0.16);
+
+// Fonts
+$font-text: 'Mulish', sans-serif;
+$font-display: 'Nerko One', cursive;
+$font-button: 'Nokora', sans-serif;
+
+// Layout
+$page-width: 1218px;
+$mobile-max: 767px;

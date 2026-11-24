@@ -1,0 +1,46 @@
+@use 'styles/tokens' as *;
+@use 'styles/mixins' as *;
+
+.ending-soon {
+  display: flex;
+  flex-direction: column;
+  gap: 32px;
+
+  @include mobile {
+    gap: 16px;
+  }
+}
+
+.ending-soon__title {
+  height: 42px;
+  color: $white;
+  font-size: 32px;
+  font-weight: 500;
+
+  @include mobile {
+    height: 30px;
+    padding-left: 16px;
+    font-size: 24px;
+  }
+}
+
+.ending-soon__cards {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 32px;
+
+  // Mobile: horizontal carousel
+  @include mobile {
+    flex-wrap: nowrap;
+    justify-content: flex-start;
+    gap: 16px;
+    padding: 0 16px;
+    overflow-x: auto;
+    scrollbar-width: none;
+
+    &::-webkit-scrollbar {
+      display: none;
+    }
+  }
+}

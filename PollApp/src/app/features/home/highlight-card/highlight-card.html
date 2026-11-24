@@ -1,0 +1,7 @@
+<a class="highlight-card" [routerLink]="['/survey', survey().id]">
+  <div class="highlight-card__top">
+    <span class="highlight-card__category">{{ survey().category }}</span>
+    <h4 class="highlight-card__title">{{ survey().title }}</h4>
+  </div>
+  <span class="deadline-badge highlight-card__deadline">{{ deadlineLabel() }}</span>
+</a>

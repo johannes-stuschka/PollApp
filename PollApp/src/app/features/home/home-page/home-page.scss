@@ -1,0 +1,79 @@
+@use 'styles/tokens' as *;
+@use 'styles/mixins' as *;
+
+:host {
+  display: block;
+  min-height: 100vh;
+  background-color: $plum;
+}
+
+.home {
+  padding: 39px 0 157px;
+
+  @include mobile {
+    padding: 48px 0;
+  }
+}
+
+.home__header {
+  margin-bottom: 88px;
+
+  @include mobile {
+    width: auto;
+    margin: 0 16px 50px;
+  }
+}
+
+.home__logo {
+  display: block;
+  width: fit-content;
+}
+
+.home__main {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 90px;
+
+  @include mobile {
+    gap: 80px;
+  }
+}
+
+.home__surveys {
+  display: flex;
+  flex-direction: column;
+  gap: 40px;
+  width: min(1042px, 100%);
+
+  @include mobile {
+    gap: 48px;
+  }
+}
+
+.home__highlights {
+  display: flex;
+  flex-direction: column;
+  gap: 56px;
+  filter: drop-shadow(0 4px 4px rgba(0, 0, 0, 0.25));
+
+  @include mobile {
+    gap: 48px;
+    filter: none;
+  }
+}
+
+.home__surveys-title {
+  height: 82px;
+  color: $orange;
+  font-family: $font-display;
+  font-size: 72px;
+  font-weight: 400;
+  text-align: center;
+
+  @include mobile {
+    height: 55px;
+    padding: 0 16px;
+    font-size: 54px;
+  }
+}

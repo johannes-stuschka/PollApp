@@ -1,0 +1,36 @@
+<div
+  class="question"
+  [class.question--disabled]="disabled()"
+  role="group"
+  [attr.aria-labelledby]="'question-title-' + number()"
+>
+  <h2 class="question__title" [id]="'question-title-' + number()">
+    <span class="question__number">{{ number() }}.</span>
+    <span>{{ question().text }}</span>
+  </h2>
+
+  @if (question().allowMultiple) {
+    <p class="question__hint">More than one answers are possible.</p>
+  }
+
+  <ul class="question__answers">
+    @for (answer of question().answers; track $index) {
+      <li>
+        <label class="checkbox question__answer">
+          <input
+            type="checkbox"
+            class="checkbox__input"
+            [checked]="isSelected($index)"
+            [disabled]="disabled()"
+            (change)="toggleAnswer($index)"
+          />
+          <span class="checkbox__box"></span>
+          <span class="question__answer-text">
+            <span class="question__letter">{{ 'ABCDEF'[$index] }}.</span>
+            <span>{{ answer.text }}</span>
+          </span>
+        </label>
+      </li>
+    }
+  </ul>
+</div>

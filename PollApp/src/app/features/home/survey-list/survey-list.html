@@ -1,0 +1,41 @@
+<div class="survey-list">
+  <div class="survey-list__filters">
+    <div class="survey-list__tabs" role="tablist" aria-label="Survey status">
+      <button
+        type="button"
+        role="tab"
+        class="btn-filter"
+        [class.btn-filter--active]="activeTab() === 'active'"
+        [attr.aria-selected]="activeTab() === 'active'"
+        (click)="selectTab('active')"
+      >
+        Active survey
+      </button>
+      <button
+        type="button"
+        role="tab"
+        class="btn-filter"
+        [class.btn-filter--active]="activeTab() === 'past'"
+        [attr.aria-selected]="activeTab() === 'past'"
+        (click)="selectTab('past')"
+      >
+        Past survey
+      </button>
+    </div>
+
+    <app-category-dropdown
+      label="Sort by categories"
+      [categories]="categories"
+      [selected]="selectedCategory()"
+      (selectedChange)="selectCategory($event)"
+    />
+  </div>
+
+  <ul class="survey-list__items">
+    @for (survey of filteredSurveys(); track survey.id) {
+      <li>
+        <app-survey-list-item [survey]="survey" />
+      </li>
+    }
+  </ul>
+</div>

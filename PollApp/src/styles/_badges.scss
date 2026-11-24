@@ -1,0 +1,33 @@
+@use 'tokens' as *;
+
+// "Published" / "Draft"
+.status-badge {
+  display: inline-flex;
+  align-items: center;
+  padding: 3px 12px 3px 8px;
+  border-radius: 0 14px 0 0;
+  color: $ink;
+  font-size: 16px;
+  font-weight: 600;
+}
+
+.status-badge--published {
+  background-color: $orange;
+}
+
+.status-badge--draft {
+  background-color: $peach;
+}
+
+// "Ends in 1 Day"
+.deadline-badge {
+  display: inline-flex;
+  align-items: center;
+  padding: 3px 6px;
+  border-radius: 0 14px 0 0;
+  background-color: $peach;
+  color: $ink;
+  font-size: 14px;
+  font-weight: 500;
+  white-space: nowrap;
+}

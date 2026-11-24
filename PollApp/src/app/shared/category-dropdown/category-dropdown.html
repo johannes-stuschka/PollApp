@@ -1,0 +1,31 @@
+<div class="dropdown">
+  <button
+    type="button"
+    class="toggle-btn dropdown__trigger"
+    [class.toggle-btn--open]="isOpen()"
+    [attr.aria-expanded]="isOpen()"
+    (click)="toggle()"
+  >
+    {{ label() }}
+    <span class="icon-arrow-drop-down" aria-hidden="true"></span>
+  </button>
+
+  @if (isOpen()) {
+    <ul class="dropdown__menu" [attr.aria-label]="label()">
+      @for (category of categories(); track category) {
+        <li>
+          <button
+            type="button"
+            class="dropdown__option"
+            [attr.aria-current]="category === selected() ? 'true' : null"
+            (click)="select(category)"
+          >
+            {{ category }}
+          </button>
+        </li>
+      }
+    </ul>
+  } @else if (selected()) {
+    <span class="dropdown__selected">{{ selected() }}</span>
+  }
+</div>

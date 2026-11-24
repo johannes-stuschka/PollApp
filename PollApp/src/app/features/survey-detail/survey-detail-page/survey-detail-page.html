@@ -1,0 +1,70 @@
+<div class="detail">
+  <header class="detail__header page-container">
+    <a routerLink="/" class="detail__logo">
+      <img src="img/logo-dark.svg" alt="Poll App" width="119" height="50" />
+    </a>
+    <button type="button" class="btn-primary detail__create" (click)="openCreateDialog()">
+      Create survey
+      <span class="btn-primary__icon icon-add-circle" aria-hidden="true"></span>
+    </button>
+  </header>
+
+  @if (survey(); as survey) {
+    <main class="detail__content page-container">
+      <article class="survey" [class.survey--closed]="isClosed()" aria-labelledby="survey-title">
+        <div class="survey__status">
+          <span class="status-badge status-badge--published">Published</span>
+          <a routerLink="/" class="survey__close" aria-label="Back to all surveys">
+            <span class="icon-close" aria-hidden="true"></span>
+          </a>
+        </div>
+
+        <div class="survey__intro">
+          <p class="survey__info">
+            @if (survey.endDate) {
+              <span>Ends on {{ survey.endDate | date: 'dd.MM.yyyy' }}</span>
+            }
+            <span class="survey__category">Category: {{ survey.category }}</span>
+          </p>
+          <h1 id="survey-title" class="survey__title">{{ survey.title }}</h1>
+          @if (survey.description) {
+            <p class="survey__description">{{ survey.description }}</p>
+          }
+        </div>
+
+        <ol class="survey__questions">
+          @for (question of survey.questions; track $index) {
+            <li>
+              <app-question-vote
+                [question]="question"
+                [number]="$index + 1"
+                [disabled]="isClosed()"
+                (selectionChange)="setAnswers($index, $event)"
+              />
+            </li>
+          }
+        </ol>
+
+        @if (!isClosed()) {
+          <button
+            type="button"
+            class="btn-secondary btn-secondary--dark-text survey__complete survey__complete--desktop"
+            (click)="completeSurvey()"
+          >
+            Complete survey
+          </button>
+          <button
+            type="button"
+            class="btn-primary survey__complete survey__complete--mobile"
+            (click)="completeSurvey()"
+          >
+            Complete
+            <span class="btn-primary__icon icon-check" aria-hidden="true"></span>
+          </button>
+        }
+      </article>
+
+      <app-survey-results [questions]="survey.questions" />
+    </main>
+  }
+</div>

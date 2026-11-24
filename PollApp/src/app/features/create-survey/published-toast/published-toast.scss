@@ -1,0 +1,72 @@
+@use 'styles/tokens' as *;
+@use 'styles/mixins' as *;
+
+// Figma overlay: 25% black backdrop, closes on outside click
+.toast-backdrop {
+  position: fixed;
+  inset: 0;
+  z-index: 1;
+  background-color: rgba(0, 0, 0, 0.25);
+}
+
+// Desktop: covers the Publish button, moves in from the right (300ms ease-out).
+// Mobile: centered over the Publish button, moves in from the bottom.
+.toast {
+  position: absolute;
+  right: 54px;
+  bottom: 40px;
+  z-index: 2;
+  width: 357px;
+  height: 86px;
+  padding: 14px 0 0 26px;
+  border-radius: 5px 50px 5px 5px;
+  background-color: $cream;
+  animation: toast-in-right 300ms ease-out;
+
+  @include mobile {
+    right: auto;
+    bottom: -15px;
+    left: 50%;
+    height: 169px;
+    margin-left: -178.5px;
+    padding-top: 22px;
+    animation-name: toast-in-bottom;
+  }
+}
+
+.toast__text {
+  width: 268px;
+  color: $plum;
+  font-family: $font-display;
+  font-size: 24px;
+  font-weight: 400;
+  letter-spacing: 0.5px;
+}
+
+.toast__mark {
+  display: none;
+
+  @include mobile {
+    display: inline;
+  }
+}
+
+.toast__close {
+  position: absolute;
+  top: 19px;
+  left: 309px;
+  display: flex;
+  color: $plum;
+}
+
+@keyframes toast-in-right {
+  from {
+    transform: translateX(100vw);
+  }
+}
+
+@keyframes toast-in-bottom {
+  from {
+    transform: translateY(100vh);
+  }
+}

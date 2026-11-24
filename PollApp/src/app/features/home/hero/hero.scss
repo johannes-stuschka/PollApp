@@ -1,0 +1,141 @@
+@use 'styles/tokens' as *;
+@use 'styles/mixins' as *;
+
+:host {
+  display: block;
+  width: 100%;
+}
+
+.hero {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 32px;
+
+  @include mobile {
+    padding: 0 16px;
+  }
+}
+
+.hero__text {
+  display: flex;
+  flex: 0 1 712px;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 24px;
+  min-width: 0;
+
+  @include mobile {
+    flex-basis: 100%;
+    align-items: center;
+  }
+}
+
+.hero__title {
+  align-self: stretch;
+  color: $orange;
+  font-family: $font-display;
+  font-size: 100px;
+  font-weight: 400;
+  line-height: 89px;
+
+  @include mobile {
+    font-size: 62px;
+    line-height: 50px;
+  }
+}
+
+.hero__lead {
+  max-width: 666px;
+  color: $white;
+  font-size: 24px;
+  font-weight: 600;
+
+  @include mobile {
+    max-width: none;
+    font-size: 18px;
+  }
+}
+
+.hero__cta {
+  margin-top: 16px;
+
+  @include mobile {
+    margin-top: 30px;
+  }
+}
+
+.hero__visual-mobile {
+  display: none;
+
+  @include mobile {
+    display: block;
+    width: 343px;
+    max-width: 100%;
+    height: auto;
+  }
+}
+
+// Hover swaps two complete states (Figma: dissolve 250ms ease-in-out)
+.hero__visual {
+  position: relative;
+  flex-shrink: 0;
+  width: 426px;
+  height: 420px;
+
+  @include mobile {
+    display: none;
+  }
+}
+
+.hero__state {
+  position: absolute;
+  inset: 0;
+  transition: opacity 250ms ease-in-out;
+
+  img {
+    position: absolute;
+  }
+}
+
+.hero__state--hover {
+  opacity: 0;
+}
+
+.hero__visual:hover {
+  .hero__state--default {
+    opacity: 0;
+  }
+
+  .hero__state--hover {
+    opacity: 1;
+  }
+}
+
+.hero__phone {
+  top: 0;
+  left: 0;
+}
+
+.hero__state--default {
+  .hero__bubble {
+    top: 97px;
+    left: 76px;
+  }
+
+  .hero__check {
+    top: 258px;
+    left: 277px;
+  }
+}
+
+.hero__state--hover {
+  .hero__bubble {
+    top: 59px;
+    left: 14px;
+  }
+
+  .hero__check {
+    top: 255px;
+    left: 326px;
+  }
+}

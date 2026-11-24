@@ -1,0 +1,59 @@
+<div class="editor" [formGroup]="group()">
+  <div class="editor__head">
+    <label class="editor__label" [for]="'question-' + number()">
+      <span class="editor__number">{{ number() }}.</span>
+      Question
+    </label>
+    <button
+      type="button"
+      class="btn-delete editor__delete"
+      [attr.aria-label]="'Delete question ' + number()"
+      (click)="remove.emit()"
+    ></button>
+  </div>
+  <input [id]="'question-' + number()" class="text-field editor__question" formControlName="text" />
+
+  <div class="editor__answers-head">
+    <span class="editor__answers-label">Answers</span>
+    <label class="checkbox checkbox--light editor__multiple">
+      <input type="checkbox" class="checkbox__input" formControlName="allowMultiple" />
+      <span class="checkbox__box"></span>
+      Allow multiple answers.
+    </label>
+  </div>
+
+  <ul class="editor__answers" formArrayName="answers">
+    @for (answer of answers().controls; track answer; let i = $index) {
+      <li class="editor__answer">
+        <label class="editor__letter" [for]="'question-' + number() + '-answer-' + i">
+          {{ 'ABCDEF'[i] }}.
+        </label>
+        <input
+          [id]="'question-' + number() + '-answer-' + i"
+          class="text-field editor__answer-input"
+          [formControlName]="i"
+        />
+        <button
+          type="button"
+          class="btn-delete editor__answer-delete"
+          [attr.aria-label]="'Delete answer ' + 'ABCDEF'[i]"
+          (click)="removeAnswer(i)"
+        ></button>
+      </li>
+    }
+  </ul>
+
+  <div class="editor__footer">
+    @if (answers().length < 6) {
+      <button type="button" class="btn-tertiary editor__add-answer" (click)="addAnswer()">
+        <span class="btn-tertiary__label">
+          Add answer
+          <span class="icon-add-circle" aria-hidden="true"></span>
+        </span>
+      </button>
+    }
+    @if (answers().length > 2) {
+      <p class="editor__hint">You can add up to 6 answer fields.</p>
+    }
+  </div>
+</div>

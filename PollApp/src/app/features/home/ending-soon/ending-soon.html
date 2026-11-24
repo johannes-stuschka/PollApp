@@ -1,0 +1,11 @@
+<section class="ending-soon" aria-labelledby="ending-soon-title">
+  <h3 id="ending-soon-title" class="ending-soon__title">Ending soon surveys</h3>
+
+  <ul class="ending-soon__cards">
+    @for (survey of surveys(); track survey.id) {
+      <li>
+        <app-highlight-card [survey]="survey" />
+      </li>
+    }
+  </ul>
+</section>

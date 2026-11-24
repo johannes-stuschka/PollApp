@@ -1,0 +1,129 @@
+@use 'styles/tokens' as *;
+@use 'styles/mixins' as *;
+
+:host {
+  display: block;
+  flex-shrink: 0;
+  width: 315px;
+}
+
+// Toggle only exists on mobile (Figma "Results accordeon Mob.")
+.results__toggle {
+  display: none;
+
+  @include mobile {
+    display: inline-flex;
+    color: $plum;
+  }
+}
+
+.results__panel {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+
+  @include mobile {
+    display: none;
+    margin-top: 24px;
+  }
+}
+
+.results--open .results__panel {
+  @include mobile {
+    display: flex;
+  }
+}
+
+.results__title {
+  color: $ink;
+  font-family: $font-display;
+  font-size: 32px;
+  font-weight: 400;
+}
+
+.results__live {
+  color: $orange;
+}
+
+.results__questions {
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+}
+
+.results__question {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.results__question-title {
+  display: flex;
+  font-size: 18px;
+  font-weight: 700;
+}
+
+.results__number {
+  flex: 0 0 26px;
+  padding-left: 5px;
+}
+
+.results__rows {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.results__row {
+  display: grid;
+  grid-template-columns: 15px 255px 33px;
+  align-items: center;
+  column-gap: 6px;
+  height: 14px;
+}
+
+.results__letter {
+  font-size: 14px;
+  font-weight: 700;
+}
+
+.results__bar {
+  height: 14px;
+  border-radius: 0 20px 20px 0;
+  background-color: $bar-track;
+}
+
+.results__fill {
+  display: block;
+  height: 100%;
+  border-radius: 0 20px 20px 0;
+  background-color: $orange;
+}
+
+.results__percent {
+  color: $percent;
+  font-size: 14px;
+  font-weight: 800;
+  text-align: right;
+}
+
+// No votes yet (desktop column is 678px high, bottom aligned with the survey)
+.results--empty .results__panel {
+  gap: 24px;
+
+  @include desktop {
+    min-height: 678px;
+  }
+}
+
+.results__empty {
+  display: flex;
+  flex-direction: column;
+  gap: 146px;
+  font-size: 18px;
+  font-weight: 700;
+}
+
+.results__empty-note {
+  text-align: center;
+}

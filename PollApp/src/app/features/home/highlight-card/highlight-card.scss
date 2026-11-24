@@ -1,0 +1,69 @@
+@use 'styles/tokens' as *;
+@use 'styles/mixins' as *;
+
+:host {
+  display: block;
+}
+
+// Figma hover: smart animate 100ms ease-out
+.highlight-card {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  width: 321px;
+  height: 310px;
+  padding: 40px 44px 60px 44px;
+  border-radius: 0 80px 0 0;
+  background-color: $lavender;
+  color: $plum;
+  transition: background-color 100ms ease-out;
+
+  &:hover {
+    background-color: $lavender-hover;
+
+    .highlight-card__deadline {
+      background-color: $orange;
+    }
+  }
+
+  @include mobile {
+    width: 250px;
+    height: 233px;
+    padding: 24px 15px 24px 15px;
+
+    &:active {
+      background-color: $lavender-hover;
+    }
+  }
+}
+
+.highlight-card__top {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.highlight-card__category {
+  font-size: 14px;
+  font-weight: 600;
+}
+
+.highlight-card__title {
+  width: 220px;
+  font-size: 26px;
+  font-weight: 700;
+
+  @include mobile {
+    font-size: 24px;
+  }
+}
+
+.highlight-card__deadline {
+  align-self: flex-start;
+  color: $plum;
+  transition: background-color 100ms ease-out;
+
+  @include mobile {
+    color: $ink;
+  }
+}

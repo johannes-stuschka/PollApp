@@ -1,0 +1,186 @@
+@use 'styles/tokens' as *;
+@use 'styles/mixins' as *;
+
+:host {
+  display: block;
+  min-height: 100vh;
+  background-color: $paper;
+}
+
+.detail {
+  padding: 39px 0 42px;
+
+  @include mobile {
+    padding: 48px 0;
+  }
+}
+
+.detail__header {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  height: 48px;
+  margin-bottom: 40px;
+
+  @include mobile {
+    width: auto;
+    height: auto;
+    margin: 0 16px 53px;
+  }
+}
+
+.detail__logo {
+  display: block;
+}
+
+.detail__create {
+  @include mobile {
+    display: none;
+  }
+}
+
+.detail__content {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: flex-end;
+  gap: 42px;
+
+  @include mobile {
+    flex-direction: column;
+    flex-wrap: nowrap;
+    align-items: center;
+    gap: 56px;
+    padding: 0 16px;
+  }
+}
+
+// Survey panel (questions)
+.survey {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  width: 702px;
+  padding: 40px;
+  border-radius: 0 160px 0 0;
+  background-color: $mauve-10;
+
+  @include mobile {
+    width: 100%;
+    padding: 40px 11.5px;
+    border-radius: 0 100px 0 0;
+  }
+}
+
+.survey__status {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 8px;
+
+  @include mobile {
+    width: 307px;
+    max-width: 100%;
+    margin-bottom: 16px;
+  }
+}
+
+.survey__close {
+  display: none;
+
+  @include mobile {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 39px;
+    height: 32px;
+    border-radius: 10px;
+    background-color: $peach;
+    color: $plum;
+  }
+}
+
+.survey__intro {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  width: 622px;
+
+  @include mobile {
+    width: 100%;
+    gap: 16px;
+  }
+}
+
+.survey__info {
+  display: flex;
+  justify-content: space-between;
+  gap: 8px;
+  width: 608px;
+  font-size: 14px;
+  font-weight: 500;
+
+  @include mobile {
+    width: 100%;
+  }
+}
+
+.survey__category {
+  color: $ink;
+}
+
+.survey__title {
+  min-height: 103px;
+  color: $orange-dark;
+  font-family: $font-display;
+  font-size: 56px;
+  font-weight: 400;
+  line-height: 50px;
+
+  @include mobile {
+    min-height: 127px;
+    font-size: 48px;
+    line-height: 42px;
+  }
+}
+
+.survey__description {
+  font-size: 16px;
+  font-weight: 500;
+
+  @include mobile {
+    margin-top: 8px;
+  }
+}
+
+.survey__questions {
+  display: grid;
+  grid-template-columns: repeat(2, 299px);
+  align-items: start;
+  gap: 24px;
+  margin-top: 40px;
+
+  @include mobile {
+    grid-template-columns: 1fr;
+  }
+}
+
+.survey__complete {
+  align-self: flex-end;
+  margin-top: 24px;
+
+  @include mobile {
+    margin-top: 40px;
+  }
+}
+
+.survey__complete--desktop {
+  @include mobile {
+    display: none;
+  }
+}
+
+.survey__complete--mobile {
+  @include desktop {
+    display: none;
+  }
+}

@@ -1,0 +1,8 @@
+<div class="toast-backdrop" (click)="closed.emit()"></div>
+
+<div class="toast" role="status">
+  <p class="toast__text">Your survey is now published<span class="toast__mark">!</span></p>
+  <button type="button" class="toast__close" aria-label="Close" (click)="closed.emit()">
+    <span class="icon-close" aria-hidden="true"></span>
+  </button>
+</div>

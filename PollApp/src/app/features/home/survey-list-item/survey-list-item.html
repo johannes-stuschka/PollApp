@@ -1,0 +1,7 @@
+<a class="list-item" [routerLink]="['/survey', survey().id]">
+  <div class="list-item__text">
+    <span class="list-item__category">{{ survey().category }}</span>
+    <h4 class="list-item__title">{{ survey().title }}</h4>
+  </div>
+  <span class="deadline-badge">{{ deadlineLabel() }}</span>
+</a>

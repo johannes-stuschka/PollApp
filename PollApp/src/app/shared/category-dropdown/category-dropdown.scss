@@ -1,0 +1,63 @@
+@use 'styles/tokens' as *;
+@use 'styles/mixins' as *;
+
+:host {
+  display: block;
+  width: 206px;
+}
+
+.dropdown {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.dropdown__trigger {
+  width: 100%;
+}
+
+// Mobile create dialog: text flush left with the field labels
+:host(.category-dropdown--flush) .dropdown__trigger {
+  @include mobile {
+    padding-left: 0;
+  }
+}
+
+.dropdown__menu {
+  position: absolute;
+  top: 36px;
+  left: 0;
+  z-index: 10;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 4px;
+  width: 206px;
+  padding: 8px 4px;
+  border-radius: 6px;
+  background-color: $white;
+}
+
+.dropdown__option {
+  padding: 4px;
+  border-radius: 6px;
+  color: $plum;
+  font-size: 14px;
+  font-weight: 400;
+  letter-spacing: 0.3px;
+  text-align: left;
+
+  &:hover {
+    background-color: $lavender-hover;
+  }
+}
+
+.dropdown__selected {
+  align-self: flex-start;
+  padding: 4px 4px 4px 10px;
+  color: $orange;
+  font-size: 14px;
+  font-weight: 400;
+  letter-spacing: 0.3px;
+}

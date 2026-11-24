@@ -1,0 +1,269 @@
+@use 'styles/tokens' as *;
+@use 'styles/mixins' as *;
+
+// Full-screen overlay (no route), opaque page background
+.overlay {
+  position: fixed;
+  inset: 0;
+  z-index: 100;
+  padding: 72px 0;
+  overflow-y: auto;
+  background-color: $paper;
+
+  @include mobile {
+    padding: 48px 0 0;
+  }
+}
+
+.overlay__logo {
+  display: none;
+
+  @include mobile {
+    display: block;
+    margin: 0 16px 53px;
+  }
+}
+
+.dialog {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  gap: 48px;
+  width: min(1166px, calc(100% - 64px));
+  margin-left: max(32px, calc((100% - 1222px) / 2));
+  padding: 40px 54px;
+  border-radius: 5px 100px 5px 5px;
+  background-color: $plum;
+
+  @include mobile {
+    align-items: center;
+    width: 100%;
+    margin: 0;
+    padding: 40px 0;
+  }
+}
+
+.dialog__content {
+  display: flex;
+  flex-direction: column;
+  align-self: stretch;
+  gap: 32px;
+
+  @include mobile {
+    align-items: center;
+    padding: 0 16px;
+  }
+}
+
+.dialog__head {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-end;
+  gap: 16px;
+
+  @include mobile {
+    align-items: flex-start;
+    width: 325px;
+    max-width: 100%;
+  }
+}
+
+.dialog__heading {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+
+  @include mobile {
+    gap: 16px;
+  }
+}
+
+.dialog__title {
+  color: $orange-dark;
+  font-family: $font-display;
+  font-size: 56px;
+  font-weight: 400;
+  line-height: 61px;
+
+  @include mobile {
+    max-width: 294px;
+    height: 94px;
+    line-height: 42px;
+  }
+}
+
+.dialog__cancel {
+  @include mobile {
+    width: 39px;
+    height: 32px;
+    padding: 0;
+  }
+}
+
+.dialog__cancel-text {
+  @include mobile {
+    display: none;
+  }
+}
+
+.dialog__fields {
+  display: flex;
+  flex-direction: column;
+  gap: 64px;
+  padding: 40px 32px;
+  border-radius: 5px 80px 5px 5px;
+  background-color: $mauve-16;
+
+  @include mobile {
+    gap: 48px;
+    width: 340px;
+    max-width: 100%;
+    padding: 40px 10px;
+  }
+}
+
+// The two-column field grid needs 986px; narrower desktops stack it
+@mixin narrow-desktop {
+  @media (min-width: $mobile-max + 1) and (max-width: 1229px) {
+    @content;
+  }
+}
+
+// Desktop: name + description on top, end date and category below the name
+.dialog__meta {
+  display: grid;
+  grid-template-columns: 256px 206px 508px;
+  grid-template-areas:
+    'name name desc'
+    'date category desc';
+  gap: 8px;
+
+  @include narrow-desktop {
+    grid-template-columns: 256px 206px;
+    grid-template-areas:
+      'name name'
+      'date category'
+      'desc desc';
+  }
+
+  @include mobile {
+    grid-template-columns: 1fr;
+    grid-template-areas:
+      'name'
+      'category'
+      'date'
+      'desc';
+  }
+}
+
+.dialog__category {
+  grid-area: category;
+
+  @include mobile {
+    width: 189px;
+    height: 55px;
+  }
+}
+
+// Label + input + delete button
+.field {
+  display: grid;
+  grid-template-columns: 1fr 26px;
+  grid-template-areas:
+    'label label'
+    'input delete';
+  align-items: center;
+  column-gap: 8px;
+  row-gap: 4px;
+
+  @include mobile {
+    grid-template-columns: 1fr 42px;
+    grid-template-areas:
+      'label delete'
+      'input input';
+    align-items: start;
+  }
+}
+
+.field--name {
+  grid-area: name;
+  width: 463px;
+}
+
+.field--date {
+  grid-area: date;
+}
+
+.field--description {
+  grid-area: desc;
+  justify-self: end;
+  width: 452px;
+
+  @include narrow-desktop {
+    justify-self: start;
+  }
+
+  .field__delete {
+    align-self: start;
+  }
+}
+
+.field--name,
+.field--description {
+  @include mobile {
+    width: auto;
+  }
+}
+
+.field--description {
+  @include mobile {
+    justify-self: stretch;
+  }
+}
+
+.field__label {
+  grid-area: label;
+  height: 22px;
+  color: $paper;
+  font-size: 18px;
+  font-weight: 700;
+  white-space: nowrap;
+}
+
+.field__optional {
+  font-weight: 400;
+}
+
+.field__input {
+  grid-area: input;
+}
+
+.field__delete {
+  grid-area: delete;
+}
+
+.dialog__questions {
+  display: grid;
+  grid-template-columns: 429px 429px;
+  align-items: start;
+  column-gap: 105px;
+  row-gap: 40px;
+
+  @include narrow-desktop {
+    grid-template-columns: 429px;
+  }
+
+  @include mobile {
+    grid-template-columns: 1fr;
+  }
+}
+
+.dialog__add-question {
+  justify-self: start;
+
+  @include mobile {
+    justify-self: center;
+    margin-top: 48px;
+  }
+}

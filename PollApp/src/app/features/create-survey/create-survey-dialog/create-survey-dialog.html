@@ -1,0 +1,95 @@
+<div class="overlay" role="dialog" aria-modal="true" aria-labelledby="create-title">
+  <img class="overlay__logo" src="img/logo-dark.svg" alt="Poll App" width="119" height="50" />
+
+  <form class="dialog" [formGroup]="form" (ngSubmit)="publish()">
+    <div class="dialog__content">
+      <div class="dialog__head">
+        <div class="dialog__heading">
+          <span class="status-badge status-badge--draft">Draft</span>
+          <h2 id="create-title" class="dialog__title">Create new survey</h2>
+        </div>
+        <button type="button" class="btn-secondary dialog__cancel" aria-label="Cancel" (click)="cancel()">
+          <span class="dialog__cancel-text">Cancel</span>
+          <span class="icon-close" aria-hidden="true"></span>
+        </button>
+      </div>
+
+      <div class="dialog__fields">
+        <div class="dialog__meta">
+          <div class="field field--name">
+            <label class="field__label" for="survey-title">Survey name</label>
+            <input id="survey-title" class="text-field field__input" formControlName="title" />
+            <button
+              type="button"
+              class="btn-delete field__delete"
+              aria-label="Clear survey name"
+              (click)="clearField('title')"
+            ></button>
+          </div>
+
+          <app-category-dropdown
+            class="dialog__category category-dropdown--flush"
+            label="Choose category"
+            [categories]="categories"
+            [selected]="form.controls.category.value"
+            (selectedChange)="selectCategory($event)"
+          />
+
+          <div class="field field--date">
+            <label class="field__label" for="survey-end-date">
+              Set end date <span class="field__optional">(optional)</span>
+            </label>
+            <input
+              id="survey-end-date"
+              type="date"
+              class="text-field field__input"
+              formControlName="endDate"
+            />
+            <button
+              type="button"
+              class="btn-delete field__delete"
+              aria-label="Clear end date"
+              (click)="clearField('endDate')"
+            ></button>
+          </div>
+
+          <div class="field field--description">
+            <label class="field__label" for="survey-description">
+              Describing text <span class="field__optional">&nbsp;(optional)</span>
+            </label>
+            <textarea
+              id="survey-description"
+              class="text-field field__input"
+              formControlName="description"
+            ></textarea>
+            <button
+              type="button"
+              class="btn-delete field__delete"
+              aria-label="Clear describing text"
+              (click)="clearField('description')"
+            ></button>
+          </div>
+        </div>
+
+        <div class="dialog__questions">
+          @for (question of questions.controls; track question; let i = $index) {
+            <app-question-editor [group]="question" [number]="i + 1" (remove)="removeQuestion(i)" />
+          }
+          <button type="button" class="btn-secondary dialog__add-question" (click)="addQuestion()">
+            Add next question
+            <span class="icon-add-circle" aria-hidden="true"></span>
+          </button>
+        </div>
+      </div>
+    </div>
+
+    <button type="submit" class="btn-primary dialog__publish" [disabled]="form.invalid">
+      Publish
+      <span class="btn-primary__icon icon-check" aria-hidden="true"></span>
+    </button>
+
+    @if (isPublished()) {
+      <app-published-toast (closed)="closeToast()" />
+    }
+  </form>
+</div>
