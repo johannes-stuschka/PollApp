@@ -1,5 +1,6 @@
 <router-outlet />
 
-<!-- @if (isCreateDialogOpen()) {
-  <app-create-survey-dialog />
-} -->
+@if ((dialog.isOpen())) {
+  <p>Dialog offen!</p>
+  <!-- <app-create-survey-dialog /> -->
+}
