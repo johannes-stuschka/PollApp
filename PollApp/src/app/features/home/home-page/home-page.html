@@ -8,13 +8,13 @@
   <main class="home__main page-container">
     <app-hero />
 
-    <!-- <section class="home__surveys" aria-labelledby="your-surveys-title">
+    <section class="home__surveys" aria-labelledby="your-surveys-title">
       <div class="home__highlights">
         <h2 id="your-surveys-title" class="home__surveys-title">Your surveys</h2>
-        <app-ending-soon [surveys]="endingSoonSurveys()" />
+        <!-- <app-ending-soon [surveys]="endingSoonSurveys()" /> -->
       </div>
-
-      <app-survey-list [surveys]="surveys()" />
-    </section> -->
+      <app-highlight-card [survey]="surveyService.surveys[0]" />
+      <!-- <app-survey-list [surveys]="surveys()" /> -->
+    </section>
   </main>
 </div>
