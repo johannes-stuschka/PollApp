@@ -1,4 +1,5 @@
-import { Component } from '@angular/core';
+import { Component, inject } from '@angular/core';
+import { CreateDialogService } from '../../create-survey/create-dialog.service';
 
 @Component({
   selector: 'app-hero',
@@ -6,5 +7,9 @@ import { Component } from '@angular/core';
   styleUrl: './hero.scss',
 })
 export class Hero {
-  openCreateDialog() {}
+  dialog = inject(CreateDialogService);
+
+  openCreateDialog() {
+    this.dialog.isOpen.set(true);
+  }
 }
