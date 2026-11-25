@@ -5,7 +5,7 @@ import { CreateSurveyDialog } from './features/create-survey/create-survey-dialo
 
 @Component({
   selector: 'app-root',
-  imports: [RouterOutlet, CreateSurveyDialog],
+  imports: [RouterOutlet, CreateSurveyDialog,],
   templateUrl: './app.html',
   styleUrl: './app.scss',
 })
