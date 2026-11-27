@@ -23,7 +23,12 @@ Danach den **Inhalt** von `PollApp/dist/PollApp/browser/` per FTP (z. B. FileZil
 
 ## Datenbank (Supabase)
 
-Für ein neues Supabase-Projekt einmal [`PollApp/supabase/schema.sql`](PollApp/supabase/schema.sql) im SQL Editor ausführen. Das Skript legt die Tabellen, die Zugriffsregeln (RLS), Realtime und Demo-Daten an (laufende und abgelaufene Umfragen). Die Projekt-URL und den Publishable Key trägst du in `PollApp/src/environments/environment.ts` ein.
+Für ein neues Supabase-Projekt im SQL Editor nacheinander ausführen:
+
+1. [`PollApp/supabase/schema.sql`](PollApp/supabase/schema.sql): Tabellen, Zugriffsregeln (RLS) und Realtime
+2. [`PollApp/supabase/seed.sql`](PollApp/supabase/seed.sql): Demo-Daten (laufende und abgelaufene Umfragen)
+
+`seed.sql` setzt die App auch zurück: Es löscht alle Umfragen und Stimmen und legt die Demo-Daten neu an. Die Projekt-URL und den Publishable Key trägst du in `PollApp/src/environments/environment.ts` ein.
 
 ## Extras (über die Checkliste hinaus)
 
