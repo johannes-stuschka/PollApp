@@ -11,10 +11,9 @@
     <section class="home__surveys" aria-labelledby="your-surveys-title">
       <div class="home__highlights">
         <h2 id="your-surveys-title" class="home__surveys-title">Your surveys</h2>
-        <!-- <app-ending-soon [surveys]="endingSoonSurveys()" /> -->
+        <app-ending-soon [surveys]="surveyService.endingSoon()" />
       </div>
-      <app-highlight-card [survey]="surveyService.surveys[0]" />
-      <!-- <app-survey-list [surveys]="surveys()" /> -->
+      <app-survey-list [surveys]="surveyService.sortedSurveys()" />
     </section>
   </main>
 </div>

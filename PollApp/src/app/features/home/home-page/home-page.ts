@@ -1,18 +1,16 @@
 import { Component, inject } from '@angular/core';
-import { Hero } from '../hero/hero';
+import { RouterLink } from '@angular/router';
 import { SurveyService } from '../../../services/survey.service';
-import { HighlightCard } from '../highlight-card/highlight-card';
+import { EndingSoon } from '../ending-soon/ending-soon';
+import { Hero } from '../hero/hero';
+import { SurveyList } from '../survey-list/survey-list';
 
 @Component({
   selector: 'app-home-page',
   templateUrl: './home-page.html',
   styleUrl: './home-page.scss',
-  imports: [Hero, HighlightCard],
+  imports: [RouterLink, Hero, EndingSoon, SurveyList],
 })
 export class HomePage {
   surveyService = inject(SurveyService);
-
-  surveys() {
-    this.surveyService.surveys;
-  }
 }
