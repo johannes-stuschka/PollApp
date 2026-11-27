@@ -11,7 +11,13 @@
       (click)="remove.emit()"
     ></button>
   </div>
-  <input [id]="'question-' + number()" class="text-field editor__question" formControlName="text" />
+  <input
+    [id]="'question-' + number()"
+    class="text-field editor__question"
+    formControlName="text"
+    placeholder="Which date would work best for you?"
+    required
+  />
 
   <div class="editor__answers-head">
     <span class="editor__answers-label">Answers</span>
@@ -32,6 +38,8 @@
           [id]="'question-' + number() + '-answer-' + i"
           class="text-field editor__answer-input"
           [formControlName]="i"
+          [placeholder]="'Answer ' + 'ABCDEF'[i]"
+          required
         />
         <button
           type="button"

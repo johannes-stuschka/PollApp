@@ -20,6 +20,12 @@
   }
 }
 
+// Placeholder: Figma input text style, half opacity
+.text-field::placeholder {
+  color: rgba($plum, 0.5);
+  opacity: 1;
+}
+
 textarea.text-field {
   height: 108px;
   resize: none;

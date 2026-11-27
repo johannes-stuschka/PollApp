@@ -1,9 +1,7 @@
 <div class="overlay" role="dialog" aria-modal="true" aria-labelledby="create-title">
   <img class="overlay__logo" src="img/logo-dark.svg" alt="Poll App" width="119" height="50" />
 
-  <!-- TEMP (Etappe 3): Original-Zeile, kommt mit Reactive Forms zurück:
-  <form class="dialog" [formGroup]="form" (ngSubmit)="publish()"> -->
-  <form class="dialog">
+  <form class="dialog" [formGroup]="form" (ngSubmit)="publish()">
     <div class="dialog__content">
       <div class="dialog__head">
         <div class="dialog__heading">
@@ -16,12 +14,17 @@
         </button>
       </div>
 
-      <!-- TEMP (Etappe 3): Felder schlafen bis Reactive Forms
       <div class="dialog__fields">
         <div class="dialog__meta">
           <div class="field field--name">
-            <label class="field__label" for="survey-title">Survey name</label>
-            <input id="survey-title" class="text-field field__input" formControlName="title" />
+            <label class="field__label" for="survey-name">Survey name</label>
+            <input
+              id="survey-name"
+              class="text-field field__input"
+              formControlName="title"
+              placeholder="e.g. Team event 2026"
+              required
+            />
             <button
               type="button"
               class="btn-delete field__delete"
@@ -46,6 +49,7 @@
               id="survey-end-date"
               type="date"
               class="text-field field__input"
+              [min]="today"
               formControlName="endDate"
             />
             <button
@@ -64,6 +68,7 @@
               id="survey-description"
               class="text-field field__input"
               formControlName="description"
+              placeholder="What is this survey about?"
             ></textarea>
             <button
               type="button"
@@ -84,11 +89,9 @@
           </button>
         </div>
       </div>
-      -->
     </div>
 
-    <!-- TEMP (Etappe 3): Publish + Toast schlafen bis Reactive Forms
-    <button type="submit" class="btn-primary dialog__publish" [disabled]="form.invalid">
+    <button type="submit" class="btn-primary dialog__publish" [disabled]="form.invalid || isSaving()">
       Publish
       <span class="btn-primary__icon icon-check" aria-hidden="true"></span>
     </button>
@@ -96,6 +99,5 @@
     @if (isPublished()) {
       <app-published-toast (closed)="closeToast()" />
     }
-    -->
   </form>
 </div>
