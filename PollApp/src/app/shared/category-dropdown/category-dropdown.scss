@@ -53,9 +53,19 @@
   }
 }
 
+// Floats below the trigger like the menu, so opening/closing never shifts the layout
 .dropdown__selected {
-  align-self: flex-start;
+  position: absolute;
+  top: 36px;
+  left: 0;
+  white-space: nowrap;
   padding: 4px 4px 4px 10px;
+
+  // Mobile list leaves only 24px below the dropdown: sit closer so nothing overlaps
+  @include mobile {
+    top: 32px;
+    padding-block: 2px;
+  }
   color: $orange;
   font-size: 14px;
   font-weight: 400;
