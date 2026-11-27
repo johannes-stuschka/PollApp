@@ -64,6 +64,11 @@
   border-radius: 0 160px 0 0;
   background-color: $mauve-10;
 
+  // Results stay bottom-aligned (Figma); a short survey must not be pushed down by taller results
+  @include desktop {
+    align-self: flex-start;
+  }
+
   @include mobile {
     width: 100%;
     padding: 40px 11.5px;
