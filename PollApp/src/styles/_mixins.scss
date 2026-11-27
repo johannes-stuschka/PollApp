@@ -19,7 +19,7 @@
   width: $width;
   height: $height;
   background-color: currentColor;
-  mask: url('/icons/#{$name}.svg') left center / #{$width} #{$height} no-repeat;
+  mask: url('../../public/icons/#{$name}.svg') left center / #{$width} #{$height} no-repeat;
 }
 
 @mixin visually-hidden {
