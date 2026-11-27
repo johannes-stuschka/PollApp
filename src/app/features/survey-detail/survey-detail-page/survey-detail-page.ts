@@ -32,7 +32,21 @@ export class SurveyDetailPage {
   });
 
   /** Chosen answer indexes per question, collected until "Complete survey" is pressed. */
-  private selections: number[][] = [];
+  private selections = signal<number[][]>([]);
+
+  /**
+   * Questions for the live results: saved votes plus the answers this browser has ticked but not sent yet,
+   * so the bars move on every click. Others only see these votes after "Complete survey".
+   */
+  resultQuestions = computed(() =>
+    (this.survey()?.questions ?? []).map((question, q) => ({
+      ...question,
+      answers: question.answers.map((answer, a) => ({
+        ...answer,
+        votes: answer.votes + (this.selections()[q]?.includes(a) ? 1 : 0),
+      })),
+    })),
+  );
   /** `true` after Complete was pressed while a question had no answer; shows the hint. */
   isMissingAnswers = signal(false);
 
@@ -48,7 +62,11 @@ export class SurveyDetailPage {
    * @param answers - Indexes of the chosen answers.
    */
   setAnswers(questionIndex: number, answers: number[]) {
-    this.selections[questionIndex] = answers;
+    this.selections.update((all) => {
+      const next = [...all];
+      next[questionIndex] = answers;
+      return next;
+    });
   }
 
   /**
@@ -58,12 +76,13 @@ export class SurveyDetailPage {
   async completeSurvey() {
     const survey = this.survey();
     if (!survey || this.isClosed()) return;
-    const allAnswered = survey.questions.every((_, i) => this.selections[i]?.length);
+    const allAnswered = survey.questions.every((_, i) => this.selections()[i]?.length);
     this.isMissingAnswers.set(!allAnswered);
     if (!allAnswered) return;
     try {
-      await this.surveyService.vote(survey.id, this.selections);
-      this.selections = [];
+      await this.surveyService.vote(survey.id, this.selections());
+      // The saved votes are loaded now, so the preview must not count them a second time.
+      this.selections.set([]);
     } catch (error) {
       // Selections stay, so the user can press Complete again.
       console.error('Could not save vote', error);
