@@ -101,13 +101,16 @@
   opacity: 0;
 }
 
-.hero__visual:hover {
-  .hero__state--default {
-    opacity: 0;
-  }
+// Figma note: "NO interaction on tablet & mobile" → only devices with a real mouse
+@media (hover: hover) and (pointer: fine) {
+  .hero__visual:hover {
+    .hero__state--default {
+      opacity: 0;
+    }
 
-  .hero__state--hover {
-    opacity: 1;
+    .hero__state--hover {
+      opacity: 1;
+    }
   }
 }
 

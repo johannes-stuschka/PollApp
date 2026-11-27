@@ -45,13 +45,15 @@
 .editor__answers-head {
   display: flex;
   justify-content: space-between;
-  align-items: center;
+  align-items: flex-start;
   gap: 16px;
+  height: 22px;
   margin-top: 24px;
 }
 
 .editor__answers-label {
   font-size: 18px;
+  line-height: 22px;
   font-weight: 700;
 }
 
@@ -83,9 +85,11 @@
 
   @include mobile {
     grid-template-columns: 1fr 42px;
+    grid-template-rows: 24px auto; // Figma: 24px label row, the 26px delete icon overhangs it
     grid-template-areas:
       'letter delete'
       'input input';
+    align-items: start;
     row-gap: 4px;
   }
 }

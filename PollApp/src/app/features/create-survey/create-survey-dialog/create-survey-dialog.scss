@@ -47,8 +47,8 @@
 .dialog__content {
   display: flex;
   flex-direction: column;
-  align-self: stretch;
   gap: 32px;
+  width: min(1052px, 100%); // Figma: 1052px, right-aligned in the dialog
 
   @include mobile {
     align-items: center;
@@ -95,6 +95,7 @@
 
 .dialog__cancel {
   @include mobile {
+    flex-shrink: 0;
     width: 39px;
     height: 32px;
     padding: 0;
@@ -111,12 +112,12 @@
   display: flex;
   flex-direction: column;
   gap: 64px;
-  padding: 40px 32px;
+  padding: 40px 33px; // Figma: 986px field area centered in 1052px
   border-radius: 5px 80px 5px 5px;
   background-color: $mauve-16;
 
   @include mobile {
-    gap: 48px;
+    gap: 25px; // Figma: visible gap between description and question 1
     width: 340px;
     max-width: 100%;
     padding: 40px 10px;
@@ -247,7 +248,7 @@
   display: grid;
   grid-template-columns: 429px 429px;
   align-items: start;
-  column-gap: 105px;
+  column-gap: 91px; // Figma: 429px question + 91px gap
   row-gap: 40px;
 
   @include narrow-desktop {

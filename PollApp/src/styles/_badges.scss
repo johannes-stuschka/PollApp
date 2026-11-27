@@ -12,6 +12,8 @@
 }
 
 .status-badge--published {
+  justify-content: center;
+  width: 94px; // Figma: fixed width
   background-color: $orange;
 }
 

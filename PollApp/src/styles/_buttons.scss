@@ -148,6 +148,7 @@
 
   @include mobile {
     font-size: 14px;
+    line-height: 19px; // Figma mobile: 23px button
   }
 }
 

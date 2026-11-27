@@ -26,17 +26,17 @@
 
 .ending-soon__cards {
   display: flex;
-  flex-wrap: wrap;
-  justify-content: center;
+  // Centered like Figma at full width; scrolls sideways when 3 cards don't fit (tablets)
+  justify-content: safe center;
   gap: 32px;
+  overflow-x: auto;
+  scrollbar-width: thin;
 
   // Mobile: horizontal carousel
   @include mobile {
-    flex-wrap: nowrap;
     justify-content: flex-start;
     gap: 16px;
     padding: 0 16px;
-    overflow-x: auto;
     scrollbar-width: none;
 
     &::-webkit-scrollbar {

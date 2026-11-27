@@ -149,6 +149,7 @@
 
   @include mobile {
     margin-top: 8px;
+    line-height: 19.75px; // Figma mobile: 4 lines in a fixed 79px text box
   }
 }
 
@@ -160,7 +161,7 @@
   margin-top: 40px;
 
   @include mobile {
-    grid-template-columns: 1fr;
+    grid-template-columns: minmax(0, 1fr); // lets 299px questions shrink below 375px
   }
 }
 

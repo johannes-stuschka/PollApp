@@ -5,6 +5,7 @@
   display: block;
   flex-shrink: 0;
   width: 315px;
+  max-width: 100%;
 }
 
 // Toggle only exists on mobile (Figma "Results accordeon Mob.")
@@ -76,7 +77,7 @@
 
 .results__row {
   display: grid;
-  grid-template-columns: 15px 255px 33px;
+  grid-template-columns: 15px minmax(0, 255px) 33px;
   align-items: center;
   column-gap: 6px;
   height: 14px;

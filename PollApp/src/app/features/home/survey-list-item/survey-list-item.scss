@@ -35,6 +35,11 @@
   flex-direction: column;
   align-self: stretch;
   gap: 8px;
+
+  // Figma mobile: 306px text block, right-aligned in the 311px content box
+  @include mobile {
+    padding-left: 5px;
+  }
 }
 
 .list-item__category {
