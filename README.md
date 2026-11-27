@@ -5,7 +5,6 @@ Umfrage-App (Angular 21 + Supabase): Umfragen erstellen, abstimmen und die Auswe
 ## Starten
 
 ```bash
-cd PollApp
 npm install
 npx ng serve
 ```
@@ -15,20 +14,19 @@ Danach `http://localhost:4200/` öffnen.
 ## Auf den Server hochladen (FTP)
 
 ```bash
-cd PollApp
 npx ng build
 ```
 
-Danach den **Inhalt** von `PollApp/dist/PollApp/browser/` per FTP (z. B. FileZilla) in einen beliebigen Ordner auf dem Server laden. Die App nutzt Hash-URLs (`…/#/survey/3`) und relative Pfade, deshalb läuft sie in jedem Ordner und braucht keine `.htaccess`.
+Danach den **Inhalt** von `dist/PollApp/browser/` per FTP (z. B. FileZilla) in einen beliebigen Ordner auf dem Server laden. Die App nutzt Hash-URLs (`…/#/survey/3`) und relative Pfade, deshalb läuft sie in jedem Ordner und braucht keine `.htaccess`.
 
 ## Datenbank (Supabase)
 
 Für ein neues Supabase-Projekt im SQL Editor nacheinander ausführen:
 
-1. [`PollApp/supabase/schema.sql`](PollApp/supabase/schema.sql): Tabellen, Zugriffsregeln (RLS) und Realtime
-2. [`PollApp/supabase/seed.sql`](PollApp/supabase/seed.sql): Demo-Daten (laufende und abgelaufene Umfragen)
+1. [`supabase/schema.sql`](supabase/schema.sql): Tabellen, Zugriffsregeln (RLS) und Realtime
+2. [`supabase/seed.sql`](supabase/seed.sql): Demo-Daten (laufende und abgelaufene Umfragen)
 
-`seed.sql` setzt die App auch zurück: Es löscht alle Umfragen und Stimmen und legt die Demo-Daten neu an. Die Projekt-URL und den Publishable Key trägst du in `PollApp/src/environments/environment.ts` ein.
+`seed.sql` setzt die App auch zurück: Es löscht alle Umfragen und Stimmen und legt die Demo-Daten neu an. Die Projekt-URL und den Publishable Key trägst du in `src/environments/environment.ts` ein.
 
 ## Extras (über die Checkliste hinaus)
 
