@@ -9,6 +9,10 @@ import { PublishedToast } from '../published-toast/published-toast';
 import { QuestionEditor } from '../question-editor/question-editor';
 import { questionForm } from '../question-form';
 
+/**
+ * Overlay to create a new survey (User Story 3).
+ * Required: name, category, questions with all answers. Optional: end date, description.
+ */
 @Component({
   selector: 'app-create-survey-dialog',
   templateUrl: './create-survey-dialog.html',
@@ -16,16 +20,25 @@ import { questionForm } from '../question-form';
   imports: [ReactiveFormsModule, CategoryDropdown, QuestionEditor, PublishedToast],
 })
 export class CreateSurveyDialog {
+  /** Closes the dialog. */
   private dialog = inject(CreateDialogService);
+  /** Saves the new survey. */
   private surveyService = inject(SurveyService);
+  /** Navigates to the new survey after publishing. */
   private router = inject(Router);
 
+  /** Options of the category dropdown. */
   categories = CATEGORIES;
+  /** Earliest selectable end date ('YYYY-MM-DD'). */
   today = today();
+  /** `true` after a successful publish; shows the confirmation toast. */
   isPublished = signal(false);
+  /** `true` while the survey is being saved; blocks a second click on Publish. */
   isSaving = signal(false);
+  /** Id of the published survey, used to open it after the toast closes. */
   private publishedId?: number;
 
+  /** The whole form; Publish stays disabled while it is invalid. */
   form = new FormGroup({
     title: new FormControl('', { nonNullable: true, validators: Validators.required }),
     category: new FormControl('', { nonNullable: true, validators: Validators.required }),
@@ -34,27 +47,44 @@ export class CreateSurveyDialog {
     questions: new FormArray([questionForm()]),
   });
 
+  /** Shortcut to the questions of the form. */
   get questions() {
     return this.form.controls.questions;
   }
 
+  /** Closes the dialog without saving. */
   cancel() {
     this.dialog.isOpen.set(false);
   }
 
+  /**
+   * Empties a text field (trash icon next to it).
+   *
+   * @param name - The field to clear.
+   */
   clearField(name: 'title' | 'endDate' | 'description') {
     this.form.controls[name].setValue('');
   }
 
+  /**
+   * Takes over the category picked in the dropdown.
+   *
+   * @param category - The chosen category.
+   */
   selectCategory(category: string) {
     this.form.controls.category.setValue(category);
   }
 
+  /** Adds an empty question below the existing ones. */
   addQuestion() {
     this.questions.push(questionForm());
   }
 
-  /** Question 1 can't be removed, its delete button only clears its fields. */
+  /**
+   * Removes a question. Question 1 can't be removed, its delete button only clears its fields.
+   *
+   * @param index - Index of the question.
+   */
   removeQuestion(index: number) {
     if (index > 0) {
       this.questions.removeAt(index);
@@ -65,6 +95,7 @@ export class CreateSurveyDialog {
     first.controls.answers.controls.forEach((answer) => answer.setValue(''));
   }
 
+  /** Saves the survey and shows the confirmation toast. On an error the form keeps its values. */
   async publish() {
     if (this.form.invalid || this.isSaving() || this.isPublished()) return;
     this.isSaving.set(true);
@@ -79,6 +110,11 @@ export class CreateSurveyDialog {
     }
   }
 
+  /**
+   * Turns the form values into a survey: trims texts and drops empty optional fields.
+   *
+   * @returns The new survey without id.
+   */
   private formToSurvey(): Omit<Survey, 'id'> {
     const { title, category, endDate, description, questions } = this.form.getRawValue();
     return {
@@ -94,6 +130,7 @@ export class CreateSurveyDialog {
     };
   }
 
+  /** Closes the toast and the dialog and opens the new survey (Figma note). */
   closeToast() {
     this.dialog.isOpen.set(false);
     this.router.navigate(['/survey', this.publishedId]);

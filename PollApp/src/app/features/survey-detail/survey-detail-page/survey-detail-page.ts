@@ -7,6 +7,7 @@ import { CreateDialogService } from '../../create-survey/create-dialog.service';
 import { QuestionVote } from '../question-vote/question-vote';
 import { SurveyResults } from '../survey-results/survey-results';
 
+/** Detail view of a survey: vote on the left, live results on the right (User Stories 4 and 5). */
 @Component({
   selector: 'app-survey-detail-page',
   templateUrl: './survey-detail-page.html',
@@ -14,28 +15,44 @@ import { SurveyResults } from '../survey-results/survey-results';
   imports: [DatePipe, RouterLink, QuestionVote, SurveyResults],
 })
 export class SurveyDetailPage {
+  /** Provides the survey and saves votes. */
   private surveyService = inject(SurveyService);
+  /** Opens the create survey dialog from the header button. */
   private dialog = inject(CreateDialogService);
 
   /** Route parameter :id, bound by withComponentInputBinding(). */
   id = input.required<string>();
 
+  /** The survey of this page, `undefined` while loading or if the id doesn't exist. */
   survey = computed(() => this.surveyService.getById(Number(this.id())));
+  /** `true` if the survey has ended or this browser already voted: answers are read-only. */
   isClosed = computed(() => {
     const survey = this.survey();
     return !survey || isPast(survey) || this.surveyService.hasVoted(survey.id);
   });
 
+  /** Chosen answer indexes per question, collected until "Complete survey" is pressed. */
   private selections: number[][] = [];
 
+  /** Shows the create survey dialog. */
   openCreateDialog() {
     this.dialog.isOpen.set(true);
   }
 
+  /**
+   * Stores the current choice of one question.
+   *
+   * @param questionIndex - Index of the question.
+   * @param answers - Indexes of the chosen answers.
+   */
   setAnswers(questionIndex: number, answers: number[]) {
     this.selections[questionIndex] = answers;
   }
 
+  /**
+   * Sends the chosen answers. Does nothing if the survey is closed or nothing is chosen.
+   * On an error the choices stay, so the user can try again.
+   */
   async completeSurvey() {
     const survey = this.survey();
     if (!survey || this.isClosed() || !this.selections.some((answers) => answers?.length)) return;

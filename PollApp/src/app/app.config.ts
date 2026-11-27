@@ -3,6 +3,10 @@ import { provideRouter, withComponentInputBinding, withHashLocation } from '@ang
 
 import { routes } from './app.routes';
 
+/**
+ * Global providers of the app.
+ * Route parameters are bound to component inputs (e.g. `:id` → `SurveyDetailPage.id`).
+ */
 export const appConfig: ApplicationConfig = {
   providers: [
     provideBrowserGlobalErrorListeners(),
