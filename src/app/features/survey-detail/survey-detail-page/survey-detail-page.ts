@@ -25,6 +25,11 @@ export class SurveyDetailPage {
 
   /** The survey of this page, `undefined` while loading or if the id doesn't exist. */
   survey = computed(() => this.surveyService.getById(Number(this.id())));
+  /** `true` if the survey has ended: there is no Complete button at all. */
+  isEnded = computed(() => {
+    const survey = this.survey();
+    return !survey || isPast(survey);
+  });
   /** `true` if the survey has ended or this browser already voted: answers are read-only. */
   isClosed = computed(() => {
     const survey = this.survey();

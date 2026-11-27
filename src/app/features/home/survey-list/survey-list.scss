@@ -39,45 +39,15 @@
   }
 }
 
-// 2 columns, 3 rows visible (422px), scrolls beyond that.
-// Scrollbar sits 15px right of the list like the "Scroll" bar in Figma.
+// 2 columns, grows with the list (no inner scrollbar)
 .survey-list__items {
   display: grid;
   grid-template-columns: repeat(2, minmax(0, 1fr));
   align-content: start;
   gap: 16px;
-  max-height: 422px;
-  margin-right: -23px;
-  padding-right: 15px;
-  overflow-y: auto;
-  scrollbar-gutter: stable;
-
-  // Chrome ignores ::-webkit-scrollbar once scrollbar-width is set
-  @supports not selector(::-webkit-scrollbar) {
-    scrollbar-color: $orange transparent;
-    scrollbar-width: thin;
-  }
-
-  &::-webkit-scrollbar {
-    width: 8px;
-  }
-
-  &::-webkit-scrollbar-track {
-    background: transparent;
-  }
-
-  &::-webkit-scrollbar-thumb {
-    border-radius: 10px;
-    background-color: $orange;
-    box-shadow: 3px 3px 3.2px rgba(0, 0, 0, 0.25);
-  }
 
   @include mobile {
     grid-template-columns: 1fr;
     gap: 15px;
-    max-height: none;
-    margin-right: 0;
-    padding: 0;
-    overflow-y: visible;
   }
 }

@@ -56,6 +56,7 @@
 
 // Survey panel (questions)
 .survey {
+  position: relative;
   display: flex;
   flex-direction: column;
   align-items: flex-start;
@@ -179,11 +180,17 @@
   }
 }
 
+// Sits in the 40px bottom padding below Complete, so showing it doesn't move anything
 .survey__error {
-  align-self: flex-end;
-  margin-top: 8px;
+  position: absolute;
+  right: 40px;
+  bottom: 12px;
   color: $error;
   font-size: 14px;
+
+  @include mobile {
+    right: 11.5px;
+  }
 }
 
 .survey__complete--desktop {
