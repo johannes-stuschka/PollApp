@@ -51,10 +51,6 @@
   }
 }
 
-.editor__error {
-  margin-top: 4px;
-}
-
 .editor__question {
   @include mobile {
     height: 34px;
@@ -121,15 +117,6 @@
 
 .editor__answer-input {
   grid-area: input;
-}
-
-.editor__answer-error {
-  grid-column: input;
-  margin-top: 4px;
-
-  @include mobile {
-    grid-column: 1 / -1;
-  }
 }
 
 .editor__answer-delete {

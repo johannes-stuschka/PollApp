@@ -24,7 +24,13 @@
               id="survey-name"
               class="text-field field__input"
               formControlName="title"
-              placeholder="e.g. Team event 2026"
+              [class.text-field--error]="form.controls.title.touched && form.controls.title.invalid"
+              [attr.aria-invalid]="form.controls.title.touched && form.controls.title.invalid"
+              [placeholder]="
+                form.controls.title.touched && form.controls.title.invalid
+                  ? 'Please enter a survey name.'
+                  : 'e.g. Team event 2026'
+              "
               [maxlength]="maxLength.title"
               required
             />
@@ -37,23 +43,16 @@
               aria-label="Clear survey name"
               (click)="clearField('title')"
             ></button>
-            @if (form.controls.title.touched && form.controls.title.invalid) {
-              <p class="form-error field__error" role="alert">Please enter a survey name.</p>
-            }
           </div>
 
-          <div class="dialog__category">
-            <app-category-dropdown
-              class="dialog__category-dropdown category-dropdown--flush"
-              label="Choose category *"
-              [categories]="categories"
-              [selected]="form.controls.category.value"
-              (selectedChange)="selectCategory($event)"
-            />
-            @if (form.controls.category.touched && form.controls.category.invalid) {
-              <p class="form-error" role="alert">Please choose a category.</p>
-            }
-          </div>
+          <app-category-dropdown
+            class="dialog__category category-dropdown--flush"
+            [class.category-dropdown--error]="form.controls.category.touched && form.controls.category.invalid"
+            label="Choose category *"
+            [categories]="categories"
+            [selected]="form.controls.category.value"
+            (selectedChange)="selectCategory($event)"
+          />
 
           <div class="field field--date">
             <label class="field__label" for="survey-end-date">

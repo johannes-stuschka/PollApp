@@ -48,11 +48,19 @@
   visibility: visible;
 }
 
-// Error text below a field (create dialog, on $plum)
-.form-error {
-  grid-column: 1 / -1;
+// Empty required field after leaving it: red frame, the placeholder shows the error (takes no extra space)
+.text-field--error {
+  box-shadow: inset 0 0 0 2px $error;
+}
+
+.text-field--error::placeholder {
+  color: $error;
+}
+
+// Category dropdown of the create dialog without a choice: label and arrow turn red (same text, so nothing moves).
+// Element + class beats the dropdown's own scoped styles.
+app-category-dropdown.category-dropdown--error .dropdown__trigger {
   color: $error-on-dark;
-  font-size: 14px;
 }
 
 textarea.text-field {

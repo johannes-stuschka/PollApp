@@ -16,7 +16,13 @@
       [id]="'question-' + number()"
       class="text-field editor__question"
       formControlName="text"
-      placeholder="Which date would work best for you?"
+      [class.text-field--error]="group().controls.text.touched && group().controls.text.invalid"
+      [attr.aria-invalid]="group().controls.text.touched && group().controls.text.invalid"
+      [placeholder]="
+        group().controls.text.touched && group().controls.text.invalid
+          ? 'Please enter a question.'
+          : 'Which date would work best for you?'
+      "
       [maxlength]="maxLength.question"
       required
     />
@@ -24,9 +30,6 @@
       {{ group().controls.text.value.length }}/{{ maxLength.question }}
     </span>
   </div>
-  @if (group().controls.text.touched && group().controls.text.invalid) {
-    <p class="form-error editor__error" role="alert">Please enter a question.</p>
-  }
 
   <div class="editor__answers-head">
     <span class="editor__answers-label">
@@ -49,7 +52,9 @@
           [id]="'question-' + number() + '-answer-' + i"
           class="text-field editor__answer-input"
           [formControlName]="i"
-          [placeholder]="'Answer ' + 'ABCDEF'[i]"
+          [class.text-field--error]="answer.touched && answer.invalid"
+          [attr.aria-invalid]="answer.touched && answer.invalid"
+          [placeholder]="(answer.touched && answer.invalid ? 'Please enter answer ' : 'Answer ') + 'ABCDEF'[i]"
           [maxlength]="maxLength.answer"
           required
         />
@@ -60,9 +65,6 @@
           [attr.aria-label]="'Delete answer ' + 'ABCDEF'[i]"
           (click)="removeAnswer(i)"
         ></button>
-        @if (answer.touched && answer.invalid) {
-          <p class="form-error editor__answer-error" role="alert">Please enter answer {{ 'ABCDEF'[i] }}.</p>
-        }
       </li>
     }
   </ul>

@@ -160,12 +160,7 @@
 
 .dialog__category {
   grid-area: category;
-  display: flex;
-  flex-direction: column;
-  gap: 4px;
-}
 
-.dialog__category-dropdown {
   @include mobile {
     width: 189px;
     height: 55px;
