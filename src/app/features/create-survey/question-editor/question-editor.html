@@ -2,7 +2,7 @@
   <div class="editor__head">
     <label class="editor__label" [for]="'question-' + number()">
       <span class="editor__number">{{ number() }}.</span>
-      Question
+      Question <span class="editor__required" aria-hidden="true">*</span>
     </label>
     <button
       type="button"
@@ -11,16 +11,27 @@
       (click)="remove.emit()"
     ></button>
   </div>
-  <input
-    [id]="'question-' + number()"
-    class="text-field editor__question"
-    formControlName="text"
-    placeholder="Which date would work best for you?"
-    required
-  />
+  <div class="editor__field">
+    <input
+      [id]="'question-' + number()"
+      class="text-field editor__question"
+      formControlName="text"
+      placeholder="Which date would work best for you?"
+      [maxlength]="maxLength.question"
+      required
+    />
+    <span class="char-count" aria-hidden="true">
+      {{ group().controls.text.value.length }}/{{ maxLength.question }}
+    </span>
+  </div>
+  @if (group().controls.text.touched && group().controls.text.invalid) {
+    <p class="form-error editor__error" role="alert">Please enter a question.</p>
+  }
 
   <div class="editor__answers-head">
-    <span class="editor__answers-label">Answers</span>
+    <span class="editor__answers-label">
+      Answers <span class="editor__required" aria-hidden="true">*</span>
+    </span>
     <label class="checkbox checkbox--light editor__multiple">
       <input type="checkbox" class="checkbox__input" formControlName="allowMultiple" />
       <span class="checkbox__box"></span>
@@ -39,14 +50,19 @@
           class="text-field editor__answer-input"
           [formControlName]="i"
           [placeholder]="'Answer ' + 'ABCDEF'[i]"
+          [maxlength]="maxLength.answer"
           required
         />
+        <span class="char-count" aria-hidden="true">{{ answer.value.length }}/{{ maxLength.answer }}</span>
         <button
           type="button"
           class="btn-delete editor__answer-delete"
           [attr.aria-label]="'Delete answer ' + 'ABCDEF'[i]"
           (click)="removeAnswer(i)"
         ></button>
+        @if (answer.touched && answer.invalid) {
+          <p class="form-error editor__answer-error" role="alert">Please enter answer {{ 'ABCDEF'[i] }}.</p>
+        }
       </li>
     }
   </ul>

@@ -4,6 +4,11 @@ import { FormArray, FormControl, FormGroup, Validators } from '@angular/forms';
 export const MIN_ANSWERS = 2;
 /** Most answer fields a question can have (Figma: "You can add up to 6 answer fields."). */
 export const MAX_ANSWERS = 6;
+/** Most characters per text field; long texts would break the card and detail layouts. */
+export const MAX_LENGTH = { title: 60, description: 300, question: 120, answer: 80 } as const;
+
+/** Required text: must contain at least one non-space character ("   " counts as empty). */
+export const requiredText = [Validators.required, Validators.pattern(/\S/)];
 
 /** Typed form group of one question in the create dialog. */
 export type QuestionForm = FormGroup<{
@@ -21,7 +26,10 @@ export type QuestionForm = FormGroup<{
  * @returns An empty, required control.
  */
 export function answerControl(): FormControl<string> {
-  return new FormControl('', { nonNullable: true, validators: Validators.required });
+  return new FormControl('', {
+    nonNullable: true,
+    validators: [...requiredText, Validators.maxLength(MAX_LENGTH.answer)],
+  });
 }
 
 /**
@@ -31,7 +39,10 @@ export function answerControl(): FormControl<string> {
  */
 export function questionForm(): QuestionForm {
   return new FormGroup({
-    text: new FormControl('', { nonNullable: true, validators: Validators.required }),
+    text: new FormControl('', {
+      nonNullable: true,
+      validators: [...requiredText, Validators.maxLength(MAX_LENGTH.question)],
+    }),
     allowMultiple: new FormControl(false, { nonNullable: true }),
     answers: new FormArray(Array.from({ length: MIN_ANSWERS }, answerControl)),
   });

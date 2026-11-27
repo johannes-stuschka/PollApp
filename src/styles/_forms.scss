@@ -26,6 +26,35 @@
   opacity: 1;
 }
 
+// Room for the character counter (only shown while focused)
+.text-field[maxlength]:focus {
+  padding-right: 60px;
+}
+
+// "12/60" inside the bottom right of a text field, only while it has focus.
+// Needs to come right after the field and share its grid area 'input'.
+.char-count {
+  grid-area: input;
+  justify-self: end;
+  align-self: end;
+  margin: 0 12px 6px 0;
+  color: rgba($plum, 0.5);
+  font-size: 12px;
+  pointer-events: none;
+  visibility: hidden;
+}
+
+.text-field:focus ~ .char-count {
+  visibility: visible;
+}
+
+// Error text below a field (create dialog, on $plum)
+.form-error {
+  grid-column: 1 / -1;
+  color: $error-on-dark;
+  font-size: 14px;
+}
+
 textarea.text-field {
   height: 108px;
   resize: none;

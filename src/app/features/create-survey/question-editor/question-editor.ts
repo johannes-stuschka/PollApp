@@ -1,6 +1,6 @@
 import { Component, computed, input, output } from '@angular/core';
 import { ReactiveFormsModule } from '@angular/forms';
-import { MAX_ANSWERS, MIN_ANSWERS, QuestionForm, answerControl } from '../question-form';
+import { MAX_ANSWERS, MAX_LENGTH, MIN_ANSWERS, QuestionForm, answerControl } from '../question-form';
 
 /** Editor for one question in the create dialog: question text, answers and the multiple choice switch. */
 @Component({
@@ -16,6 +16,8 @@ export class QuestionEditor {
   number = input.required<number>();
   /** Emits when the trash icon of the question is clicked. */
   remove = output<void>();
+  /** Character limits of the question and answer fields. */
+  maxLength = MAX_LENGTH;
 
   /** The answer controls of this question. */
   answers = computed(() => this.group().controls.answers);

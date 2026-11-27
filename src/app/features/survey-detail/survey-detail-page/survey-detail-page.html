@@ -61,6 +61,9 @@
             Complete
             <span class="btn-primary__icon icon-check" aria-hidden="true"></span>
           </button>
+          @if (isMissingAnswers()) {
+            <p class="survey__error" role="alert">Please answer every question.</p>
+          }
         }
       </article>
 

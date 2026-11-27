@@ -16,6 +16,12 @@ body {
   background-color: $paper;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+  overflow-wrap: anywhere; // very long words wrap instead of breaking the layout
+}
+
+// The create dialog is a full-screen overlay with its own scrollbar; the page behind must not scroll too
+body:has(app-create-survey-dialog) {
+  overflow: hidden;
 }
 
 h1,

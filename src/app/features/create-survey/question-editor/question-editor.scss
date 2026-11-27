@@ -25,6 +25,11 @@
   font-weight: 700;
 }
 
+// The label is a flex row, which drops the space before the "*"
+.editor__label .editor__required {
+  margin-left: 4px;
+}
+
 .editor__number {
   flex: 0 0 27px;
   padding-left: 6px;
@@ -34,6 +39,20 @@
   @include mobile {
     margin-right: 16px;
   }
+}
+
+// Question input + its character counter on top of each other
+.editor__field {
+  display: grid;
+  grid-template-areas: 'input';
+
+  .text-field {
+    grid-area: input;
+  }
+}
+
+.editor__error {
+  margin-top: 4px;
 }
 
 .editor__question {
@@ -102,6 +121,15 @@
 
 .editor__answer-input {
   grid-area: input;
+}
+
+.editor__answer-error {
+  grid-column: input;
+  margin-top: 4px;
+
+  @include mobile {
+    grid-column: 1 / -1;
+  }
 }
 
 .editor__answer-delete {

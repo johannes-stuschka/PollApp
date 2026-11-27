@@ -7,7 +7,7 @@ import { CategoryDropdown } from '../../../shared/category-dropdown/category-dro
 import { CreateDialogService } from '../create-dialog.service';
 import { PublishedToast } from '../published-toast/published-toast';
 import { QuestionEditor } from '../question-editor/question-editor';
-import { questionForm } from '../question-form';
+import { MAX_LENGTH, questionForm, requiredText } from '../question-form';
 
 /**
  * Overlay to create a new survey (User Story 3).
@@ -29,6 +29,8 @@ export class CreateSurveyDialog {
 
   /** Options of the category dropdown. */
   categories = CATEGORIES;
+  /** Character limits of the text fields (maxlength + counter). */
+  maxLength = MAX_LENGTH;
   /** Earliest selectable end date ('YYYY-MM-DD'). */
   today = today();
   /** `true` after a successful publish; shows the confirmation toast. */
@@ -38,12 +40,18 @@ export class CreateSurveyDialog {
   /** Id of the published survey, used to open it after the toast closes. */
   private publishedId?: number;
 
-  /** The whole form; Publish stays disabled while it is invalid. */
+  /** The whole form; Publish looks disabled while it is invalid, a click then shows every error. */
   form = new FormGroup({
-    title: new FormControl('', { nonNullable: true, validators: Validators.required }),
+    title: new FormControl('', {
+      nonNullable: true,
+      validators: [...requiredText, Validators.maxLength(MAX_LENGTH.title)],
+    }),
     category: new FormControl('', { nonNullable: true, validators: Validators.required }),
     endDate: new FormControl('', { nonNullable: true }),
-    description: new FormControl('', { nonNullable: true }),
+    description: new FormControl('', {
+      nonNullable: true,
+      validators: Validators.maxLength(MAX_LENGTH.description),
+    }),
     questions: new FormArray([questionForm()]),
   });
 
@@ -95,9 +103,16 @@ export class CreateSurveyDialog {
     first.controls.answers.controls.forEach((answer) => answer.setValue(''));
   }
 
-  /** Saves the survey and shows the confirmation toast. On an error the form keeps its values. */
+  /**
+   * Saves the survey and shows the confirmation toast. On an error the form keeps its values.
+   * If fields are missing, it only marks all fields as touched so their error texts appear.
+   */
   async publish() {
-    if (this.form.invalid || this.isSaving() || this.isPublished()) return;
+    if (this.form.invalid) {
+      this.form.markAllAsTouched();
+      return;
+    }
+    if (this.isSaving() || this.isPublished()) return;
     this.isSaving.set(true);
     try {
       this.publishedId = await this.surveyService.create(this.formToSurvey());

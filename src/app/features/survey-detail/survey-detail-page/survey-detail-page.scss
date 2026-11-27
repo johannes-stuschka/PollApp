@@ -179,6 +179,13 @@
   }
 }
 
+.survey__error {
+  align-self: flex-end;
+  margin-top: 8px;
+  color: $error;
+  font-size: 14px;
+}
+
 .survey__complete--desktop {
   @include mobile {
     display: none;

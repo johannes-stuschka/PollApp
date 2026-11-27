@@ -17,29 +17,43 @@
       <div class="dialog__fields">
         <div class="dialog__meta">
           <div class="field field--name">
-            <label class="field__label" for="survey-name">Survey name</label>
+            <label class="field__label" for="survey-name">
+              Survey name <span class="field__required" aria-hidden="true">*</span>
+            </label>
             <input
               id="survey-name"
               class="text-field field__input"
               formControlName="title"
               placeholder="e.g. Team event 2026"
+              [maxlength]="maxLength.title"
               required
             />
+            <span class="char-count" aria-hidden="true">
+              {{ form.controls.title.value.length }}/{{ maxLength.title }}
+            </span>
             <button
               type="button"
               class="btn-delete field__delete"
               aria-label="Clear survey name"
               (click)="clearField('title')"
             ></button>
+            @if (form.controls.title.touched && form.controls.title.invalid) {
+              <p class="form-error field__error" role="alert">Please enter a survey name.</p>
+            }
           </div>
 
-          <app-category-dropdown
-            class="dialog__category category-dropdown--flush"
-            label="Choose category"
-            [categories]="categories"
-            [selected]="form.controls.category.value"
-            (selectedChange)="selectCategory($event)"
-          />
+          <div class="dialog__category">
+            <app-category-dropdown
+              class="dialog__category-dropdown category-dropdown--flush"
+              label="Choose category *"
+              [categories]="categories"
+              [selected]="form.controls.category.value"
+              (selectedChange)="selectCategory($event)"
+            />
+            @if (form.controls.category.touched && form.controls.category.invalid) {
+              <p class="form-error" role="alert">Please choose a category.</p>
+            }
+          </div>
 
           <div class="field field--date">
             <label class="field__label" for="survey-end-date">
@@ -69,7 +83,11 @@
               class="text-field field__input"
               formControlName="description"
               placeholder="What is this survey about?"
+              [maxlength]="maxLength.description"
             ></textarea>
+            <span class="char-count" aria-hidden="true">
+              {{ form.controls.description.value.length }}/{{ maxLength.description }}
+            </span>
             <button
               type="button"
               class="btn-delete field__delete"
@@ -91,7 +109,13 @@
       </div>
     </div>
 
-    <button type="submit" class="btn-primary dialog__publish" [disabled]="form.invalid || isSaving()">
+    <button
+      type="submit"
+      class="btn-primary dialog__publish"
+      [class.btn-primary--inactive]="form.invalid"
+      [attr.aria-disabled]="form.invalid"
+      [disabled]="isSaving()"
+    >
       Publish
       <span class="btn-primary__icon icon-check" aria-hidden="true"></span>
     </button>

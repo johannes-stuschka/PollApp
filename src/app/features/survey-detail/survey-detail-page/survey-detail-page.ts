@@ -1,5 +1,5 @@
 import { DatePipe } from '@angular/common';
-import { Component, computed, inject, input } from '@angular/core';
+import { Component, computed, inject, input, signal } from '@angular/core';
 import { RouterLink } from '@angular/router';
 import { isPast } from '../../../models/survey';
 import { SurveyService } from '../../../services/survey.service';
@@ -33,6 +33,8 @@ export class SurveyDetailPage {
 
   /** Chosen answer indexes per question, collected until "Complete survey" is pressed. */
   private selections: number[][] = [];
+  /** `true` after Complete was pressed while a question had no answer; shows the hint. */
+  isMissingAnswers = signal(false);
 
   /** Shows the create survey dialog. */
   openCreateDialog() {
@@ -50,12 +52,15 @@ export class SurveyDetailPage {
   }
 
   /**
-   * Sends the chosen answers. Does nothing if the survey is closed or nothing is chosen.
-   * On an error the choices stay, so the user can try again.
+   * Sends the chosen answers. Every question needs at least one answer, otherwise it shows a hint.
+   * Does nothing if the survey is closed. On an error the choices stay, so the user can try again.
    */
   async completeSurvey() {
     const survey = this.survey();
-    if (!survey || this.isClosed() || !this.selections.some((answers) => answers?.length)) return;
+    if (!survey || this.isClosed()) return;
+    const allAnswered = survey.questions.every((_, i) => this.selections[i]?.length);
+    this.isMissingAnswers.set(!allAnswered);
+    if (!allAnswered) return;
     try {
       await this.surveyService.vote(survey.id, this.selections);
       this.selections = [];
