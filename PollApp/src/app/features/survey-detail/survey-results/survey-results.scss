@@ -23,6 +23,11 @@
   flex-direction: column;
   gap: 16px;
 
+  // Figma "no results yet": 678px column; kept with results too, so the title never jumps
+  @include desktop {
+    min-height: 678px;
+  }
+
   @include mobile {
     display: none;
     margin-top: 24px;
@@ -99,25 +104,87 @@
   height: 100%;
   border-radius: 0 20px 20px 0;
   background-color: $orange;
+  // Grows from 0 when shown, then glides to every new live value (Figma timing: 300ms ease-out)
+  transition: width 300ms ease-out;
+  animation: results-grow 300ms ease-out;
+}
+
+// Registered so the number can be animated; the counter draws it as text
+@property --percent {
+  syntax: '<integer>';
+  inherits: false;
+  initial-value: 0;
 }
 
 .results__percent {
+  counter-reset: percent var(--percent);
   color: $percent;
   font-size: 14px;
   font-weight: 800;
   text-align: right;
-}
+  transition: --percent 300ms ease-out;
+  animation: results-count 300ms ease-out;
 
-// No votes yet (desktop column is 678px high, bottom aligned with the survey)
-.results--empty .results__panel {
-  gap: 24px;
-
-  @include desktop {
-    min-height: 678px;
+  &::after {
+    content: counter(percent) '%';
   }
 }
 
+// "No results yet" and the results share one cell and cross-fade
+.results__body {
+  display: grid;
+  align-items: start;
+
+  > * {
+    grid-area: 1 / 1;
+  }
+}
+
+.results-fade-in {
+  animation: results-fade-in 300ms ease-out;
+}
+
+.results-fade-out {
+  animation: results-fade-out 300ms ease-out forwards;
+}
+
+@keyframes results-fade-in {
+  from {
+    opacity: 0;
+  }
+}
+
+@keyframes results-fade-out {
+  to {
+    opacity: 0;
+  }
+}
+
+@keyframes results-grow {
+  from {
+    width: 0;
+  }
+}
+
+@keyframes results-count {
+  from {
+    --percent: 0;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .results__fill,
+  .results__percent,
+  .results-fade-in,
+  .results-fade-out {
+    transition: none;
+    animation: none;
+  }
+}
+
+// No votes yet: 24px below the title (Figma), 16px gap + 8px
 .results__empty {
+  margin-top: 8px;
   display: flex;
   flex-direction: column;
   gap: 146px;
